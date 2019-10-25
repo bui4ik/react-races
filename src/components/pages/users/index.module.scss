@@ -1,0 +1,50 @@
+.users{
+
+  &__title{
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+
+  &__list{
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__item{
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    font-size: 18px;
+    align-items: center;
+    background-color: #e8eaf6;
+    border-radius: 10px;
+  }
+
+  &__photo {
+    width: 80px;
+    height: 80px;
+    margin-right: 100px;
+
+    img {
+      width: 100%;
+      border-radius: 100%;
+    }
+  }
+
+  &__name{
+    width: 150px;
+    margin-right: 50px;
+  }
+  &__email{
+    width: 250px;
+    margin-right: 50px;
+  }
+  &__description{
+    width: 250px;
+    margin-right: 50px;
+  }
+  &__loader{
+    max-width: 100px;
+    margin: 150px auto 0;
+  }
+}
