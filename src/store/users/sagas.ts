@@ -5,14 +5,16 @@ import {
     GET_ALL_USERS_SUCCESS
 } from "./actions";
 import axios from 'axios'
-import {USERS} from "../../mock/users.mock";
+
+const allUsersRequest = () => {
+    return axios.get('./data/users.json')
+        .then(response => response.data)
+};
 
 function* getUsersSaga() {
     try {
-        // let users = yield USERS;
-        // yield delay(1000);
-        const users = yield call<any>(axios.get('./data/users.json')
-            .then(res => res.data));
+        yield delay(1000);
+        const users = yield call<any>(allUsersRequest);
         yield put({type: GET_ALL_USERS_SUCCESS, payload: users})
     } catch (e) {
         const error = 'Something goes wrong when fetching users, please try again';
