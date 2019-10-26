@@ -23,7 +23,6 @@ const usersReducer = (state = initialState, { type, payload } : Action) => {
             }
         }
         case actions.GET_ALL_USERS_FAILURE: {
-            console.log(payload);
             return {
                 ...state,
                 loadingUsers: false,

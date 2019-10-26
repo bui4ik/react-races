@@ -2,7 +2,7 @@ import {applyMiddleware, combineReducers, createStore} from "redux";
 import thunk from "redux-thunk";
 import usersReducer from "./users/reducer";
 import createSagaMiddleware from 'redux-saga';
-import {watchGetAllUsers} from "./users/sagas";
+import {watchUsers} from "./users/sagas";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -12,6 +12,6 @@ const reducers = combineReducers<any>({
 });
 
 const store = createStore(reducers, initialState ,applyMiddleware(thunk, sagaMiddleware));
-sagaMiddleware.run(watchGetAllUsers);
+sagaMiddleware.run(watchUsers);
 
 export default store;

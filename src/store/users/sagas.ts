@@ -1,27 +1,32 @@
-import { takeLatest, put, call, delay } from 'redux-saga/effects'
-import {
-    GET_ALL_USERS_FAILURE,
-    GET_ALL_USERS_REQUEST,
-    GET_ALL_USERS_SUCCESS
-} from "./actions";
-import axios from 'axios'
+import { takeEvery, put, call, delay, all } from 'redux-saga/effects'
+import * as ac from "./actions";
+import * as requests from "../../api/requests/usersRequest";
 
-const allUsersRequest = () => {
-    return axios.get('./data/users.json')
-        .then(response => response.data)
-};
-
-function* getUsersSaga() {
+function* getUsers() {
     try {
         yield delay(1000);
-        const users = yield call<any>(allUsersRequest);
-        yield put({type: GET_ALL_USERS_SUCCESS, payload: users})
+        const users = yield call<any>(requests.getAllUsers);
+        yield put(ac.getAllUsersSuccess(users))
     } catch (e) {
         const error = 'Something goes wrong when fetching users, please try again';
-        yield put({type: GET_ALL_USERS_FAILURE, payload: error})
+        yield put(ac.getAllUsersFailure(error))
     }
 }
 
-export function* watchGetAllUsers() {
-    yield takeLatest(GET_ALL_USERS_REQUEST, getUsersSaga)
+function* getUser(action: any) {
+    try {
+        yield delay(1000);
+        const user = yield call<any>(requests.getUser, action);
+        yield put(ac.getUserSuccess(user))
+    }catch (e) {
+        yield put(ac.getUserFailure(e))
+    }
+}
+
+export function* watchUsers() {
+    yield all([
+        takeEvery(ac.getAllUsersRequest, getUsers),
+        // начинает жестко лагать
+        takeEvery(ac.getUserRequest, getUser)
+    ]);
 }

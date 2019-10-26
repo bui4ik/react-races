@@ -1,18 +1,13 @@
 import React from "react";
 import DefaultPageTemplate from "../../templates/DeafaultPageTemplate";
 import {USERS} from "../../../mock/users.mock";
-import { RouteComponentProps } from 'react-router';
 import styles from "./index.module.scss"
 import { Form, Input } from '@rocketseat/unform';
 import {User} from "../../../entities/user";
 import * as selectors from "../../../store/users/selectors";
-import {getUser} from "../../../store/users/thunks";
 import {connect} from "react-redux";
 import Loader from "../users/components/loader";
-
-interface UrlProps extends RouteComponentProps<any>{
-    id: number
-}
+import {getUserRequest} from "../../../store/users/actions";
 
 interface IState{
     user: User
@@ -24,7 +19,7 @@ class UserDetailed extends React.Component<any>{
     };
 
     async componentDidMount(): Promise<void> {
-        this.props.getUser(this.props.match.params.id)
+        this.props.getUser()
     }
 
     handleSubmit = ({ name, surname, email, description }: any) => {
@@ -73,7 +68,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        getUser: (userId: string) => dispatch(getUser(userId))
+        getUser: () => dispatch(getUserRequest())
     }
 };
 
