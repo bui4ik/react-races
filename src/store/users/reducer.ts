@@ -7,7 +7,7 @@ interface Action {
     users: any
 }
 
-const usersReducer = (state = initialState, {type, payload } : Action) => {
+const usersReducer = (state = initialState, { type, payload } : Action) => {
     switch (type) {
         case actions.GET_ALL_USERS_REQUEST: {
             return {
@@ -23,6 +23,7 @@ const usersReducer = (state = initialState, {type, payload } : Action) => {
             }
         }
         case actions.GET_ALL_USERS_FAILURE: {
+            debugger;
             return {
                 ...state,
                 loadingUsers: false,
