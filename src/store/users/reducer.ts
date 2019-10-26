@@ -3,7 +3,8 @@ import {initialState} from "./selectors";
 
 interface Action {
     type: string,
-    payload: any
+    payload: any,
+    users: any
 }
 
 const usersReducer = (state = initialState, {type, payload } : Action) => {

@@ -3,9 +3,9 @@ import DefaultPageTemplate from "../../templates/DeafaultPageTemplate";
 import styles from "./index.module.scss"
 import * as selectors from "../../../store/users/selectors"
 import {connect} from "react-redux";
-import {getAllUsers} from "../../../store/users/thunks";
 import UsersItem from "./components/usersItem/usersItem";
 import Loader from "./components/loader";
+import {GET_ALL_USERS_REQUEST} from "../../../store/users/actions";
 
 
 class Users extends React.Component<any>{
@@ -35,7 +35,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        getAllUsers: () => dispatch(getAllUsers())
+        getAllUsers: () => dispatch({type: GET_ALL_USERS_REQUEST})
     }
 };
 
