@@ -12,40 +12,101 @@ const usersReducer = (state = initialState, { type, payload } : Action) => {
         case actions.GET_ALL_USERS_REQUEST: {
             return {
                 ...state,
-                loadingUsers: true
+                isLoading: true
             }
         }
         case actions.GET_ALL_USERS_SUCCESS: {
             return {
                 ...state,
                 users: payload,
-                loadingUsers: false
+                isLoading: false
             }
         }
         case actions.GET_ALL_USERS_FAILURE: {
             return {
                 ...state,
-                loadingUsers: false,
+                isLoading: false,
                 error: payload
             }
         }
         case actions.GET_USER_REQUEST: {
             return {
                 ...state,
-                isUserLoading: true
+                isLoading: true
             }
         }
         case actions.GET_USER_SUCCESS: {
             return {
                 ...state,
-                isUserLoading: false,
+                isLoading: false,
                 detailedUser: payload
             }
         }
         case actions.GET_USER_FAILURE: {
             return {
                 ...state,
-                isUserLoading: false,
+                isLoading: false,
+                error: payload
+            }
+        }
+        case actions.UPDATE_USER_REQUEST: {
+            return {
+                ...state,
+                isLoading: true,
+            }
+        }
+        case actions.UPDATE_USER_SUCCESS: {
+            return {
+                ...state,
+                users: state.users.map(user => user._id === payload.id ? payload : user),
+                detailedUser: payload,
+                isLoading: false,
+            }
+        }
+        case actions.UPDATE_USER_FAILURE: {
+            return {
+                ...state,
+                isLoading: false,
+                error: payload
+            }
+        }
+        case actions.CREATE_NEW_USER_REQUEST: {
+            return {
+                ...state,
+                isLoading: true,
+            }
+        }
+        case actions.CREATE_NEW_USER_SUCCESS: {
+            return {
+                ...state,
+                isLoading: false,
+                users: [...state.users, payload]
+            }
+        }
+        case actions.CREATE_NEW_USER_FAILURE: {
+            return {
+                ...state,
+                isLoading: false,
+                error: payload
+            }
+        }
+        case actions.DELETE_USER_REQUEST: {
+            return {
+                ...state,
+                isLoading: true,
+            }
+        }
+        case actions.DELETE_USER_SUCCESS: {
+            return {
+                ...state,
+                users: state.users.filter( user => user._id !== payload),
+                isLoading: false
+            }
+        }
+        case actions.DELETE_USER_FAILURE: {
+            return {
+                ...state,
+                isLoading: false,
                 error: payload
             }
         }

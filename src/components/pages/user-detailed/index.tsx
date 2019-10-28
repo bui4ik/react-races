@@ -1,45 +1,34 @@
 import React from "react";
-import DefaultPageTemplate from "../../templates/DeafaultPageTemplate";
-import {USERS} from "../../../mock/users.mock";
+import DefaultPageLayout from "../../layouts/DeafaultPageLayout";
 import styles from "./index.module.scss"
 import { Form, Input } from '@rocketseat/unform';
-import {User} from "../../../entities/user";
 import * as selectors from "../../../store/users/selectors";
 import {connect} from "react-redux";
-import Loader from "../users/components/loader";
-import {getUserRequest} from "../../../store/users/actions";
-
-interface IState{
-    user: User
-}
+import {getUserRequest, updateUserRequest} from "../../../store/users/actions";
 
 class UserDetailed extends React.Component<any>{
-    state: IState = {
-        user: {}
-    };
 
     async componentDidMount(): Promise<void> {
-        this.props.getUser()
+        this.props.getUser(this.props.match.params.id)
     }
 
-    handleSubmit = ({ name, surname, email, description }: any) => {
-        const users = USERS.map(user => user.id === this.state.user.id ? {...user, name, surname, email, description} : user);
-        console.log(users)
+    handleSubmit = (user: any) => {
+        user.id = this.props.match.params.id;
+        user.photo = "http://bit.ly/32yRgpH";
+        this.props.updateUser(user)
     };
 
     render() {
-        const { name, surname, photo, email, description } = this.props.user;
-        const { isLoading } = this.props;
+        const { name, surname, username, photo, email, description } = this.props.user;
         const initialData = {
             name,
             surname,
+            username,
             email,
             description
         };
         return (
-            <DefaultPageTemplate title='Racer profile'>
-                { isLoading ? <Loader/>
-                :
+            <DefaultPageLayout title='Racer profile'>
                     <div className={styles.user__container}>
                         <div className={styles.user__photo}>
                             <img src={photo} alt='user'/>
@@ -47,28 +36,27 @@ class UserDetailed extends React.Component<any>{
                         <Form onSubmit={this.handleSubmit} initialData={initialData}>
                             <Input name="name" />
                             <Input name="surname"/>
+                            <Input name="username"/>
                             <Input name="email"/>
                             <Input name="description"/>
                             <button type="submit">Save changes</button>
                         </Form>
                     </div>
-                }
-            </DefaultPageTemplate>
+            </DefaultPageLayout>
         )
     }
 }
 
 const mapStateToProps = (state: any) => {
     return {
-        users: selectors.allUsersSelector(state),
         user: selectors.detailedUserSelector(state),
-        isLoading: selectors.isUserLoadingSelector(state),
     }
 };
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        getUser: () => dispatch(getUserRequest())
+        getUser: (id: string) => dispatch(getUserRequest(id)),
+        updateUser: (user: any) => dispatch(updateUserRequest(user))
     }
 };
 

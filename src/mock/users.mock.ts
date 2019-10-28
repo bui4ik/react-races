@@ -2,7 +2,7 @@ import {User} from "../entities/user";
 
 export const USERS: User[] = [
   {
-    id: '1',
+    _id: '1',
     name: 'George',
     surname: 'Bush',
     username: 'president',
@@ -11,7 +11,7 @@ export const USERS: User[] = [
     photo: 'http://bit.ly/343oqOL',
   },
   {
-    id: '2',
+    _id: '2',
     name: 'Nicolas',
     surname: 'Cage',
     username: 'ghost_racer',
@@ -20,7 +20,7 @@ export const USERS: User[] = [
     photo: 'http://bit.ly/32yRgpH',
   },
   {
-    id: '3',
+    _id: '3',
     name: 'John',
     surname: 'Travolta',
     username: 'johny1488',

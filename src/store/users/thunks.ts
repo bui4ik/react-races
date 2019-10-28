@@ -11,9 +11,9 @@ export const getAllUsers = () => async (dispatch: any) => {
 };
 
 export const getUser = (userId: string) => async (dispatch: any) => {
-    dispatch(actions.getUserRequest());
+    dispatch(actions.getUserRequest(userId));
     try {
-        const user = USERS.find(user => user.id === userId);
+        const user = USERS.find(user => user._id === userId);
         await setTimeout(() => dispatch(actions.getUserSuccess(user)), 1000)
     } catch (e) {
         dispatch(actions.getUserFailure(e))

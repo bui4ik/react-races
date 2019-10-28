@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../index.module.scss";
+import styles from "../../../../pages/users/index.module.scss";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 const Loader = () => (
